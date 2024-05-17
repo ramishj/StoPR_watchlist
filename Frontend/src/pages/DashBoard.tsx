@@ -122,9 +122,9 @@ export default function Dashboard() {
         body: JSON.stringify({ symbol })
       });
       const data = await response.json();
-      const updatedWatchlist: string[] = data.watchlists;
+      const updatedWatchlist: string[] = data.watchlists[0].symbols;
       const newWatchlist = updatedWatchlist.map(symbol => ({ symbol, price: undefined }));
-
+      console.log(newWatchlist)
       setWatchlist(newWatchlist);
 
       // Fetch prices for the updated watchlist asynchronously
