@@ -3,20 +3,14 @@ import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box, Button, List, ListItem, ListItemText } from '@mui/material';
 import axios from 'axios';
-import { ServerLink } from '../ServerLink';
 
 export interface Stock {
   symbol: string;
   name: string;
 }
 
-function sleep(duration: number): Promise<void> {
-  return new Promise<void>((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, duration);
-  });
-}
+const API_KEY = 'YQKC5RLIBF1VXMGH'; // Replace with your actual API key
+const ALPHA_VANTAGE_URL = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH';
 
 export default function AsYouTypeSearch({ onAdd }: { onAdd: (symbol: string) => void }) {
   const [loading, setLoading] = React.useState(false);
@@ -31,14 +25,26 @@ export default function AsYouTypeSearch({ onAdd }: { onAdd: (symbol: string) => 
     if (value.trim() !== '') {
       setLoading(true);
       try {
-        const response = await axios.get(`${ServerLink}/watchlist/searchSymbol`, {
-          params: { symbol: value },
+        const response = await axios.get(ALPHA_VANTAGE_URL, {
+          params: {
+            keywords: value,
+            apikey: API_KEY,
+          },
         });
-        const data: Stock[] = response.data.results;
-        setSearchResults(data);
+        const data = response.data.bestMatches;
+        
+        if (data) {
+          const results: Stock[] = data.map((item: any) => ({
+            symbol: item['1. symbol'],
+            name: item['2. name'],
+          }));
+          setSearchResults(results);
 
-        // Log search results in the console
-        console.log('Search results:', data);
+          // Log search results in the console
+          console.log('Search results:', results);
+        } else {
+          setSearchResults([]);
+        }
       } catch (error) {
         console.error('Error fetching symbol search results:', error);
       } finally {

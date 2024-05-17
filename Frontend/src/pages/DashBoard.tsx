@@ -12,7 +12,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { ServerLink } from '../ServerLink';
 import AsYouTypeSearch from '../components/SearchBar';
-import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Stock {
@@ -55,12 +54,13 @@ export default function Dashboard() {
     if (isAuthenticated) {
       const fetchWatchlist = async () => {
         try {
-          const response = await axios.get(`${ServerLink}/watchlist`, {
+          const response = await fetch(`${ServerLink}/watchlist`, {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('Stopr_Token')}`
             }
           });
-          const watchlistData: string[] = response.data.watchlists;
+          const data = await response.json();
+          const watchlistData: string[] = data.watchlists;
           const initialWatchlist = watchlistData.map(symbol => ({ symbol, price: undefined }));
           setWatchlist(initialWatchlist);
 
@@ -86,13 +86,16 @@ export default function Dashboard() {
 
   const handleAddToWatchlist = async (symbol: string) => {
     try {
-      const response = await axios.post(`${ServerLink}/watchlist/add`, { symbol }, {
+      const response = await fetch(`${ServerLink}/watchlist/add`, {
+        method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('Stopr_Token')}`
-        }
+        },
+        body: JSON.stringify({ symbol })
       });
-
-      const updatedWatchlist: string[] = response.data.watchlists;
+      const data = await response.json();
+      const updatedWatchlist: string[] = data.watchlists;
       const newWatchlist = updatedWatchlist.map(symbol => ({ symbol, price: undefined }));
       setWatchlist(newWatchlist);
 
@@ -110,16 +113,16 @@ export default function Dashboard() {
 
   const handleRemoveFromWatchlist = async (symbol: string) => {
     try {
-      const response = await axios.delete(`${ServerLink}/watchlist/remove`, {
+      const response = await fetch(`${ServerLink}/watchlist/remove`, {
+        method: 'DELETE',
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('Stopr_Token')}`
         },
-        data: {
-          symbol: symbol
-        }
+        body: JSON.stringify({ symbol })
       });
-
-      const updatedWatchlist: string[] = response.data.watchlists[0].symbols;
+      const data = await response.json();
+      const updatedWatchlist: string[] = data.watchlists;
       const newWatchlist = updatedWatchlist.map(symbol => ({ symbol, price: undefined }));
 
       setWatchlist(newWatchlist);
@@ -138,12 +141,11 @@ export default function Dashboard() {
 
   const getStockValue = async (symbol: string): Promise<number | null> => {
     try {
-      const apiKey = 'YQKC5RLIBF1VXMGH'; // Replace 'demo' with your actual API key
+      const apiKey = 'YQKC5RLIBF1VXMGH';
       const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${apiKey}`;
 
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data);
       const timeSeries = data['Time Series (5min)'];
       if (!timeSeries) {
         console.log('No time series data available for', symbol);
@@ -162,10 +164,9 @@ export default function Dashboard() {
         return null;
       }
 
-      console.log(latestTime, latestPrice);
       return parseFloat(latestPrice);
-    } catch (error: any) {
-      console.log(error);
+    } catch (error) {
+      console.error('Error fetching stock value:', error);
       return null;
     }
   };
