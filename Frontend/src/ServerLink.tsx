@@ -1,1 +1,1 @@
-export const ServerLink = 'https://backend-q9adw8ioq-ramishjs-projects.vercel.app';
+export const ServerLink = 'https://backend-10-lyff.onrender.com/watchList/searchSymbol?symbol=GOOG';
