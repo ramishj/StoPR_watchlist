@@ -1,1 +1,1 @@
-export const ServerLink = 'https://backend-10-lyff.onrender.com/watchList/searchSymbol?symbol=GOOG';
+export const ServerLink = 'https://backend-10-lyff.onrender.com';
