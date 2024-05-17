@@ -1,46 +1,102 @@
-# Getting Started with Create React App
+# StoPR Watchlist App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The StoPR Watchlist App is a web application that allows users to manage a personal watchlist of stocks. Users can add and remove stocks from their watchlist and view the latest stock prices. The app is built with a React frontend and a Node.js backend.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- User authentication (login and registration)
+- Add and remove stocks from a personalized watchlist
+- Fetch and display the latest stock prices
+- Responsive design using Material-UI
 
-### `npm start`
+## Project Structure
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The project consists of two main parts:
+1. **Frontend**: A React application that provides the user interface.
+2. **Backend**: A Node.js server that handles authentication and manages the watchlist.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Links
 
-### `npm test`
+- **Frontend Repository**: [StoPR Watchlist Frontend](https://github.com/ramishj/StoPR_watchlist)
+- **Backend Repository**: [StoPR Backend](https://github.com/ramishj/Stopr_Backend)
+- **Backend Deployment**: [Backend Service](https://backend-12-5q67.onrender.com)
+- **Frontend Deployment**: [Frontend Application](https://sto-pr-watchlist-gciv-4uj8zlpna-ramishjs-projects.vercel.app/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Make sure you have the following installed on your local machine:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Node.js
+- npm (Node Package Manager)
+- Git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installation
 
-### `npm run eject`
+1. **Clone the repositories:**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+git clone https://github.com/ramishj/StoPR_watchlist.git
+git clone https://github.com/ramishj/Stopr_Backend.git
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Install Dependencies:**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    Navigate to the frontend directory and install dependencies:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+cd StoPR_watchlist
+npm install
+```  
+     Navigate to the backend directory and install dependencies:
 
-## Learn More
+```bash 
+cd ./Backend
+npm install
+```
+3. ***Configuration:***<br>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    ### Backend Configuration:
+    Create a .env file in the root of the backend directory and add the following environment variables, replacing placeholders with your actual values:
+    ### Frontend Configuration:
+    Update the `ServerLink` variable in the `ServerLink.tsx` file to point to your local backend server (e.g., `http://localhost:5000`).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. **Running the Applications Locally:**<br>
+
+    ### Start the backend server:
+     ```bash
+     cd ./Backend
+     yarn install && yarn build
+     yarn start
+     ```
+     ### Start the frontend server:
+     ```bash
+     cd ./StoPR_watchlist
+     npm start
+     ```
+
+    The frontend application should now be running on http://localhost:3000
+
+    ### Usage
+    Get started with the StoPR Watchlist App and manage your stock watchlist effectively:
+
+    #### Register or Login:
+
+    - Create a new account if you're a new user.
+    - Log in with your existing account credentials if you've already registered.
+
+    #### Build Your Watchlist:
+
+    - Use the search bar to find stocks you're interested in.
+    - Add the desired stocks to your personalized watchlist.
+
+    #### Track Market Trends:
+
+    - View real-time stock prices on your dedicated dashboard.
+    - Stay informed about market fluctuations and make informed decisions.
+
+    #### Manage Your Watchlist:
+
+    - Remove stocks from your watchlist when they no longer interest you.
+    - Keep your watchlist focused and relevant to your investment goals.
